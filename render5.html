@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      // 第一种:String 
+      // render: h => h('div','一个HTML标签字符')
+      //第二种:Object
+      // render: h => h({
+      //   template: `<div>{{msg}}</div>`,
+      //   data() {
+      //     return {
+      //       msg: '组件选项对象'
+      //     }
+      //   }
+      // })
+      // 第三种: Function
+      render: h => {
+        // let func = h => {template: `<div>一个返回HTML标签字符或组件选项对象的函数</div>`};
+        //第一种箭头函数简写不生效,是{}被错误识别的问题,let func = h => 'div'就没有问题
+        let func = h => {
+          return {template: `<div>一个返回HTML标签字符或组件选项对象的函数</div>`};
+        }
+        // let func = function() {
+        //   return {template: `<div>一个返回HTML标签字符或组件选项对象的函数</div>`};
+        // };
+        return h(func());
+      }
+    })
+  </script>
+</body>
+</html>

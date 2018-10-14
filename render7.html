@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <elem></elem>
+    </div>
+    <script>
+        Vue.component('elem', {
+            render: function(createElement) {
+                // return createElement('div', '文本');//使用字符串生成文本节点
+                return createElement('div', [//由createElement函数构建而成的数组
+                    '文本节点',//节点包括文本节点,注释节点,与元素节点,文本节点可以直接在此处去写
+                    createElement('h1', '主标'),//createElement函数返回VNode对象,元素节点
+                    createElement('h2', '副标')
+                ]);
+            }
+        });
+        new Vue({
+            el: '#app'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <elem></elem>
+    </div>
+    <script>
+        Vue.component('elem', {
+            render: function(h) {
+                var self = this;
+                return h('div', {//一个包含模板相关属性的数据对象
+                    'class': {
+                        foo: false,
+                        bar: true
+                    },
+                    style: {
+                        color: 'red',
+                        fontSize: '14px'
+                    },
+                    attrs: {
+                      class: 'change',//当没有class配置项时,此处的class属性就会生效
+                        qwe: 'qwe',//可以添加自定义属性
+                        id: 'foo'
+                    },
+                    domProps: {
+                        innerHTML: 'baz'
+                    }
+                });
+            }
+        });
+        new Vue({
+            el: '#app'
+        });
+    </script>
+</body>
+</html>

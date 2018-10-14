@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component>
+          <h1 slot="header">我是头部,放在对应的具名插槽中</h1>
+          <p>我会被放在匿名插槽中</p>
+          <p>我会会被放在匿名插槽中</p>
+          <p slot="footer">我是尾部</p>
+        </my-component>
+    </div>
+    <script>
+        Vue.component('MyComponent',{
+          // 用h去替换createElement,目前在使用上未发现问题
+          render: function(h) {
+            let header = this.$slots.header;
+            let main = this.$slots.default;
+            let footer = this.$slots.footer;
+            return h('div',[//返回由VNode(虚拟节点)组成的数组
+              h('header',header),
+              h('main',main),
+              h('footer',footer)
+            ])
+          }
+        })
+        new Vue({
+            el: '#app'
+        });
+    </script>
+</body>
+</html>

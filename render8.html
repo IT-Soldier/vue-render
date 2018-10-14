@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <my-element></my-element>
+  </div>
+  <script>
+    //模板化的组件创建方式
+    Vue.component('MyElement',{
+      template: `
+      <button :class="classData" :id="idData" :style="styleData" @click="handelClick">按钮</button>
+      `,
+      data() {
+        return {
+          msg: '模板化测试数据',
+          styleData: {
+            fontSize: '16px',
+            color: 'red'
+          },
+          classData: {
+            btn1: true,
+            btn2: false
+          },
+          idData: 'only'
+        }
+      },
+      methods: {
+        handelClick() {
+          console.log(this.msg);
+        }
+      }
+    })
+    //render函数化的组件创建方式
+    // Vue.component('MyElement',{
+    //   render: function (createdElement) {
+    //     return createdElement('button',{
+    //       'class': {
+    //         btn1: true,
+    //         btn2: false
+    //       },
+    //       style: {
+    //         fontSize: '16px',
+    //         color: 'red'
+    //       },
+    //       attr: {
+    //         id: 'only'
+    //       },
+    //       on: {
+    //         click: this.handelClick
+    //       }
+    //       //不能直接在on中定义事件函数,此处的this指向window,拿不到data中的数据
+    //       // on: {
+    //       //   click: function() {
+    //       //     console.log(this);
+    //       //   }
+    //       // }
+    //     },'按钮')
+    //   },
+    //   //箭头函数的简写一定要注意,此处会报错,我猜还是this指向的问题,如图:
+    //   // render: h => h('button',{
+    //   //     on: {
+    //   //       click: this.handelClick
+    //   //     }
+    //   // },'按钮'),
+    //   data() {
+    //     return {
+    //       msg: '测试数据'
+    //     }
+    //   },
+    //   methods: {
+    //     handelClick() {
+    //       console.log(this.msg);
+    //     }
+    //   }
+    // })
+
+    new Vue({
+      el: '#app'
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+      <my-component class="qwe" :show="show"></my-component>
+      <my-component class="qwe" :show="!show"></my-component>
+  </div>
+
+  <script>
+    Vue.component('MyComponent',{
+      render: function (createElement) {
+        if(this.show) {
+          return createElement('p','true');
+        } else {
+          return createElement('p','false');
+        }
+      },
+      props: {
+        show: {
+          type: Boolean,
+          default: false
+        }
+      }
+    })
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        show: true
+      }
+    })
+  </script>
+</body>
+</html>

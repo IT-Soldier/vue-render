@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+      <!-- <my-component class="qwe" :someProp="我是父组件传来的值"></my-component> -->
+      <!-- 此处的my-component对虚拟节点而言没有起到任何作用 -->
+  </div>
+
+  <script>
+    // Vue.component('MyComponent', {
+    //   template: `<div>{{someProp}}</div>`
+    // }) //这种挂载组件的方式,子虚拟节点是拿不到的
+    const MyComponent = {
+      template: `<div>{{myProp}}</div>`,
+      props: ['myProp']
+    }
+    let vm = new Vue({
+      el: '#app',
+      data: {
+
+      },
+      render: function (createElement) {
+        return createElement(
+          'div',
+          {
+            // 'class': 'qwe',
+            attrs: {
+              class: 'qwe',
+            }
+          },
+          [
+            '先写一些文字',// 文本节点
+            createElement('h1','一则头条'),//元素节点
+            createElement(
+              MyComponent,
+             {
+              //  props: ['myProp']
+              // props: ['myProp'] //即便是写了my-component组件标签,有了自定义属性,一样拿不到这个值
+              //                     //我猜想是是该组件是虚拟节点的子虚拟节点导致的,已经套了好几层了
+            })
+          ]
+        )
+      },
+      mounted() {
+        console.log(this);
+      },
+    })
+  </script>
+</body>
+</html>

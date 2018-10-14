@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+      <el-input :name="myName" @input="handelChange"></el-input>
+      <div>{{'我的名字是'+ myName}}</div>
+    </div>
+    <script>
+      Vue.component('ElInput',{
+        render: function(h) {
+          let self = this;
+          return h('input',{
+            domProps: {
+              // DOM属性,还有例如:innerHTML
+              value: self.name
+            },
+            on: {
+              input: function (event) {
+                // console.log(event,this);
+                // console.log(self);//这个指向也是很难受,不懂啊
+                //此处的this如前所述,指向了window,这应该也是self去保存外层this的原因
+              self.$emit('input',event.target.value)
+              }
+            }
+          })
+        },
+        props: {
+          name: String
+        }
+      })
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          myName: 'hc'
+        },
+        methods: {
+          handelChange(value) {
+            this.myName = value;
+          }
+        }
+      })
+    </script>
+</body>
+</html>

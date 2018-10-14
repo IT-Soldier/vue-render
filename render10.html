@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+    <!-- VNode必须唯一 -->
+    <div id="app">
+        <my-component></my-component>
+    </div>
+    <script>
+      // let child = {
+      //   render: function(h) {
+      //     return h('p','我希望自己能多次出现')
+      //   }
+      // }
+
+      // Vue.component('MyComponent',{
+      //   render: function(h) {
+      //     let childNode = h(child);
+      //     return h('div',[
+      //       childNode,childNode,childNode//VNodes必须唯一,这样写是无效的,不会生成3个的
+      //     ])
+      //   }
+      // })
+
+      Vue.component('MyComponent', {
+        render: function(h) {
+          return h('div',[
+          // apply() 的第一个参数是对象，第二个参数是数组，作为参数列表。
+          // 然后其实第二个参数只要是个类数组对象就可以了，比如 {length: 5}
+          //  就可以看作一个类数组对象，长度是 5，每个元素由于没赋值，所以都是undefined，比如 v[0] 是 undefined。
+          // 所以，Array.apply(null, { length: 5}) 相当于
+          // Array(undefined, undefined, undefined, undefined, undefined)
+          // 参考链接:https://segmentfault.com/q/1010000006793990
+            Array.apply(null, {
+              length: 10
+              // map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。
+              // 参考链接:https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+            }).map(function () {
+              return h('p','我希望自己能多次出现')
+            })
+          ])
+        }
+      })
+      new Vue({
+        el: '#app'
+      })
+    </script>
+</body>
+</html>

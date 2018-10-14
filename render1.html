@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/vue/2.3.4/vue.js"></script>
+</head>
+<body>
+    <!-- Vue 推荐在绝大多数情况下使用 template 来创建你的 HTML。
+    然而在一些场景中，你真的需要 JavaScript 的完全编程的能力，
+    这时你可以用 render 函数，它比 template 更接近编译器。
+    下面是不适合template的一个示例 -->
+  <h1>Hello world!</h1>
+  <div id="app">
+    <!-- 生成锚点标题 (anchored headings)组件 -->
+    <anchored-heading :level="1">Hello world!</anchored-heading>
+  </div>
+  <!-- 放在type=”text/x-template”中的内容将不会被浏览器解析，
+  不被执行，不被显示，它只是默默地举根隐身草站在那里。 -->
+  <!-- <script type="text/x-template" id="anchored-heading-template">
+    <h1 v-if="level === 1">
+      <slot></slot>
+    </h1>
+    <h2 v-else-if="level === 2">
+      <slot></slot>
+    </h2>
+    <h3 v-else-if="level === 3">
+      <slot></slot>
+    </h3>
+    <h4 v-else-if="level === 4">
+      <slot></slot>
+    </h4>
+    <h5 v-else-if="level === 5">
+      <slot></slot>
+    </h5>
+    <h6 v-else-if="level === 6">
+      <slot></slot>
+    </h6>
+  </script>
+  <script>
+  Vue.component('anchored-heading', {
+      template: '#anchored-heading-template',
+      props: {
+        //props的一些校验
+        level: {
+          type: Number,
+          required: true
+        }
+      }
+    })
+  let vm = new Vue({
+    el: '#app'
+  })
+  </script> -->
+  <!-- 使用模板字符串,替代上面的写法,上面的写法,我不熟悉 -->
+  <!-- <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+
+      },
+      components: {
+        'anchored-heading': {
+          props: {
+            level: {
+              type: Number,
+              required: true
+            }
+          },
+          template: `
+            <h1 v-if="level === 1">
+              <slot></slot>
+            </h1>
+            <h2 v-else-if="level === 2">
+              <slot></slot>
+            </h2>
+            <h3 v-else-if="level === 3">
+              <slot></slot>
+            </h3>
+            <h4 v-else-if="level === 4">
+              <slot></slot>
+            </h4>
+            <h5 v-else-if="level === 5">
+              <slot></slot>
+            </h5>
+            <h6 v-else-if="level === 6">
+              <slot></slot>
+            </h6>
+            `
+        }
+      }
+    })
+  </script> -->
+  <script>
+    Vue.component('anchored-heading', {
+      render: function (createElement) {
+        return createElement(
+          'h' + this.level,   // 标签名称(例:h1) this.level是props中的level
+          this.$slots.default // 子元素数组 (虚拟节点,参照API的vm.$slots的实例可以看出)
+        )
+      },
+      props: {
+        level: {
+          type: Number,
+          required: true
+        }
+      },
+      mounted() {
+        console.log(this.$slots.default);
+        console.log(this);
+      }
+    })
+    let vm = new Vue({
+      el: '#app',
+      data: {
+
+      },
+    })
+  </script>
+</body>
+</html>
